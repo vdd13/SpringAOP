@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="CustomerService1" class="pl.dom.SpringAOP.CustomerService">
+    <property name="name" value="CS1"></property>
+    <property name="url" value="www.onet.pl"></property>
+  
+    <constructor-arg index="0" value="CSCon"></constructor-arg>
+    <constructor-arg index="1" value="wp.pl"></constructor-arg>
+  </bean>
+
+
+  <!-- more bean definitions go here -->
+
+  <bean id="hijackBean" class="pl.dom.SpringAOP.hijackBeforeMeth"></bean>
+  <bean id="hijackBean1" class="pl.dom.SpringAOP.hijackBeforeMeth"></bean>
+  <bean id="hijackAfeterBean" class="pl.dom.SpringAOP.hijackAfterMeth"></bean>
+  <bean id="hijackAroundMeth" class="pl.dom.SpringAOP.hijackAroundMeth"></bean>
+
+
+  <bean id="CSProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="target" ref="CustomerService1"></property>
+  
+  	<property name="interceptorNames">
+  		<list>
+  		<!-- 
+  			<value>hijackBean</value>
+  			<value>hijackBean1</value>
+  			<value>hijackAfeterBean</value>
+  		 -->	
+  			<value>hijackAroundMeth</value>
+  		</list>
+  	</property>
+  </bean>
+
+</beans>
